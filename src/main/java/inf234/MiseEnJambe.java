@@ -52,7 +52,26 @@ public class MiseEnJambe {
      * @return contenance de c dans le texte
      */
     public boolean contientContenu(String c) {
-        return false;
+        String container = ""; //Variable de stockage avec remise a zero a chaque passage sur balise
+        boolean isIn = false; //Varbiable de verification d'appartennance
+        for(int i=0; i < this.texte.length(); i++){ //Schema de parcours du texte
+            if(this.texte.charAt(i) != '<'){  //Supression des balises et reset de la variable container
+                while(this.texte.charAt(i) != '>'){
+                    container = "";
+                    i++;
+                }
+            }
+
+            container += this.texte.charAt(i);
+
+            if (stringContient(container,c)){ //Verification de l'apartenance du contenu c au container
+                isIn = true; 
+                i = this.texte.length();
+            }
+
+            i++;
+        }
+        return isIn;
     }
 
     /**
