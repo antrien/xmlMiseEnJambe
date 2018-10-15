@@ -88,7 +88,52 @@ public class MiseEnJambe {
      * @return
      */
     public String filtrer(String b) {
-        return null;
+        int i = 0;//variable compteur
+	int cb;		//compteur du string b
+	boolean boolb;	//boolean indiquant que ce qui suit < est bien le String b
+	int compbal =0;
+	String textefiltre = "";
+	while (i != this.texte.length()){
+		if ((this.texte.charAt(i)=='<')){
+			if(this.texte.charAt(i+1)=='/'){
+				cb = 0;
+				boolb = true;
+				while (cb != b.length()){
+					boolb = boolb && (this.texte.charAt(i+2+cb)==b.charAt(cb));
+					cb ++;
+				}	
+				if (boolb &&(this.texte.charAt(i+cb+2)=='>')){
+					i = i+3+cb;
+					compbal--;
+				}
+	
+				
+			} else {
+				if((this.texte.charAt(i+1)=='!')&&(this.texte.charAt(i+2)=='-')&&(this.texte.charAt(i+3)=='-')){			
+				while (!((this.texte.charAt(i) =='-')&&(this.texte.charAt(i+1) =='-')&&(this.texte.charAt(i+2) =='>'))){
+						if (compbal <= 0){textefiltre = textefiltre + this.texte.charAt(i);}
+						i++;
+					}
+				}else{			
+				
+				cb = 0;
+				boolb = true;
+				while (cb != b.length()){
+					boolb = boolb && (this.texte.charAt(i+1+cb)==b.charAt(cb));
+					cb ++;
+				}
+				if (boolb &&(this.texte.charAt(i+cb+1)=='>')){
+					i = i+1+cb;
+					compbal++;
+				}
+				}
+			}
+		}
+		if (compbal <= 0){textefiltre = textefiltre + this.texte.charAt(i);}
+		i++;			
+	}
+	System.out.println(textefiltre);
+	return textefiltre;
     }
 
 }
